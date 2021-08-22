@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Mars Data</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="jumbotron text-center">
+      <h1>Mars Data</h1>
+      <p>Here is some info about Mars</p>
+      <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Get Data!</a></p>
+    </div>
+    <div class="container">
+        <div class="row">
+        <div class="col-sm-3 col-md-6 col-lg-12">    
+          <h2>Mars news</h2>
+          <h4>{{ planet.news_title }}</h4>
+          <h5>{{ planet.article }}</h5>
+        </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+        <div class="col-sm-3 col-md-6 col-lg-6">
+        <h2>Image of Mars</h2>
+        <img src="{{ planet.full_pic }}" alt="Mars pic"width ="400">
+        </div>
+ 
+        <div class="col-sm-3 col-md-6 col-lg-6">    
+        <h2>Mars Facts</h2>
+        <p>{{planet.table | safe}}</p>
+        </div>
+    </div>
+  </div>
+    <div class="container">
+        <div class="row">
+            <h2>Mars Hemispheres</h2>
+            {%for hemispheres in planet.hemispheres%}
+            <div class="col-sm-3 col-md-6 col-lg-12">    
+            <h5>{{hemispheres.title }}</h5>
+            <img src="{{hemispheres.image_url}}">
+            </div>
+        {%endfor%}
+        </div>
+    </div>
+</body>
+
+</html>

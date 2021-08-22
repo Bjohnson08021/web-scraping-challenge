@@ -4,6 +4,7 @@ import pandas as pd
 from bs4 import BeautifulSoup
 from splinter import Browser
 from webdriver_manager.chrome import ChromeDriverManager
+import time
 
 def scrape():
 
@@ -14,7 +15,7 @@ def scrape():
     url = "https://redplanetscience.com/"
     browser.visit(url)
 
-
+    time.sleep(2)
 
     mars_pg = browser.html
     soup = BeautifulSoup(mars_pg, 'html.parser')
@@ -37,6 +38,7 @@ def scrape():
     url = "https://spaceimages-mars.com/"
     browser.visit(url)
 
+    time.sleep(2)
 
 
     selfie=browser.links.find_by_partial_text("FULL IMAGE")
@@ -68,22 +70,21 @@ def scrape():
 
     mars_facts.columns=["Info","Mars","Earth"]
     mars_facts.set_index("Info",inplace=True)
-    mars_facts=mars_facts.iloc[1:7]
+    mars_facts=mars_facts.iloc[1:7].to_html()
     mars_facts
 
 
 # Mars Hemispheres
     url = "https://marshemispheres.com/"
     browser.visit(url)
-
+    time.sleep(2)
 
 
     hemispheres = []
     items = browser.find_by_tag('h3')
-#for the length of all items in loop
+    #for the length of all items in loop
     items_length = len(items)
-    items[0].click()
-    for item in range(items_length): 
+    for item in range(4): 
         diff_hemispheres = {}
         browser.find_by_tag("h3")[item].click()
         images=browser.html
@@ -94,18 +95,24 @@ def scrape():
         diff_hemispheres["image_url"]=url + figure 
         hemispheres.append(diff_hemispheres)
         browser.back()
-
-
+    
 
 
     hemispheres
 
-
+    mars_data = {
+        "news_title":road_trip,
+        "article":road_trip_log,
+        "full_pic":featured_image_url,
+        "table":mars_facts,
+        "hemispheres":hemispheres,
+          }
 
 
     browser.quit()
 
 
+    return mars_data
 
 
 
